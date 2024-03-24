@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Garbage Overflow Detection System: A Custom Dataset Analysis</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Style the file upload form */
+    form {
+      margin-top: 50px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    input[type="file"] {
+      display: none;
+    }
+    .button {
+      display: inline-block;
+      background-color: #79dd2d;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .button1 {
+      display: inline-block;
+      background-color: #f65c5c;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .button:hover {
+      background-color: #3e8e41;
+    }
+
+    /* Style the video */
+    .video-container {
+      margin-top: -250px;
+      display: flex;
+      justify-content: right;
+    }
+    .video {
+      width: 700px;
+      height: 500px;
+      max-width: 100%;
+      max-height: 100%;
+      border: 2px solid rgb(0, 0, 0);
+    }
+  </style>
+</head>
+<body>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: rgb(140, 82, 255);
+
+      background-image: url("{{ url_for('static', filename='123-01.png') }}");
+      background-repeat: no-repeat;
+      background-size: cover;
+background-position: 0% 0%;
+    }
+    
+  </style>
+
+  <h1 style="text-align: center;"><i>Garbage Overflow Detection System</i></h1>
+
+  <form method="POST" enctype="multipart/form-data">
+    <label for="file-upload" class="button">Select a file</label>
+    <input id="file-upload" type="file" name="file" onchange="document.getElementById('selected-file-name').innerHTML = this.files[0].name;">
+    <div id="selected-file-name"></div>
+    <button type="submit" class="button">Upload</button>
+
+  </form>
+
+  <!-- Add a button to capture video from the camera -->
+  <form method="POST">
+    <input type="hidden" name="camera" value="true">
+    <button type="submit" class="button">Capture from Camera</button>
+    <input type="hidden" name="stop" value="true">
+  </form>
+  <form action="/stop" method="POST">
+    <button type="submit" class="button1" >Stop</button>
+  </form>
+  {% if file_path %}
+  <div class="video-container">
+    <img src="/video_feed?file={{ file_path }}" class="video">
+  </div>
+  
+  {% endif %}
+
+
+  <script>
+    document.getElementById("stop-button").addEventListener("click", function() {
+      var video = document.getElementsByClassName("video")[0];
+      video.pause();
+    });
+  </script>
+  
+
+</body>
+</html>
